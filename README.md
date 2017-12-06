@@ -16,8 +16,10 @@ npm run build
 
 # build for production and view the bundle analyzer report
 npm run build --report
+
 #启动服务端项目
 node server/bin/www
+
 #初始化数据库
 node init/index
 ```
