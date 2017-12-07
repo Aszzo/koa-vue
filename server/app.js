@@ -21,15 +21,19 @@ const sessionMysqlConfig= {
 }
 app.use(cors({
   origin:'http://localhost:8080',
-  maxAge: 7 * 24 * 60 * 60,
   credentials: true,
   allowMethods: ['GET', 'POST', 'DELETE'],
   allowHeaders: ['Content-Type', 'Authorization', 'Accept']
   }));
 // 配置session中间件
 app.use(session({
-  key: 'USER_SID',
-  store: new MysqlStore(sessionMysqlConfig)
+  key: 'session_id',
+  store: new MysqlStore(sessionMysqlConfig),
+  cookie: {
+    maxAge:1512722604126,
+    httpOnly:true,
+    overwrite: false
+  },
 }))
 
 app.on('error', (err, ctx) => {
