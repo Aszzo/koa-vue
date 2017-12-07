@@ -47,5 +47,33 @@ module.exports = {
       result.msg = userCode.ERROR_SYS
     }
     ctx.body = result;
+  },
+  async signin(ctx){
+    let formData = ctx.request.body;
+    let result = {
+      success:false,
+      msg:'',
+      data:null
+    };
+    let validateResult = await userInfoService.rulesSignIn(formData);
+    if(!validateResult.success){
+      result = validateResult;
+      ctx.body = result
+      return
+    }
+    let testUsernameAndPassword = await userInfoService.findByUsernameAndPassword(formData);
+    if(testUsernameAndPassword){
+      result.success = true;
+      ctx.body = result;
+      let session = ctx.session;
+      session.isLogin = true;
+      session.userName = testUsernameAndPassword.name;
+      session.userId = testUsernameAndPassword.id;
+      return
+    }else{
+      result.msg = userCode.FAIL_USER_NAME_OR_PASSWORD_ERROR;
+      ctx.body = result;
+      return
+    }
   }
 };
