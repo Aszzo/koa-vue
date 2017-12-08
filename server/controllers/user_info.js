@@ -48,6 +48,7 @@ module.exports = {
     }
     ctx.body = result;
   },
+  /*登录*/
   async signin(ctx){
     let formData = ctx.request.body;
     let result = {
@@ -63,12 +64,15 @@ module.exports = {
     }
     let testUsernameAndPassword = await userInfoService.findByUsernameAndPassword(formData);
     if(testUsernameAndPassword){
+      let delExpiresSession = await userInfoService.deleteExpires(new Date().getTime());
+      if(delExpiresSession){
+        let session = ctx.session;
+        session.isLogin = true;
+        session.userName = testUsernameAndPassword.name;
+        session.userId = testUsernameAndPassword.id;
+      }
       result.success = true;
       ctx.body = result;
-      let session = ctx.session;
-      session.isLogin = true;
-      session.userName = testUsernameAndPassword.name;
-      session.userId = testUsernameAndPassword.id;
       return
     }else{
       result.msg = userCode.FAIL_USER_NAME_OR_PASSWORD_ERROR;

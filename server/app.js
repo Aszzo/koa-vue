@@ -8,6 +8,7 @@ const cors = require('koa2-cors');
 const config = require('./config/config')
 const signup = require('./routes/signup')
 const signin = require('./routes/signin')
+const ONE_DAY  = 24 * 3600 * 1000;
 const app = new Koa();
 app.use(logger());
 app.use(bodyParser());
@@ -27,10 +28,11 @@ app.use(cors({
   }));
 // 配置session中间件
 app.use(session({
-  key: 'session_id',
+  key: 'USER_SID',
   store: new MysqlStore(sessionMysqlConfig),
+  rolling: true,
   cookie: {
-    maxAge:1512722604126,
+    maxAge:7 * ONE_DAY,
     httpOnly:true,
     overwrite: false
   },
