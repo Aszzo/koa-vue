@@ -39,6 +39,7 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 在进行ajax请求时设置`credentials:include`，并且在服务端设置`Access-Control-Allow-Credentials：true`。这样无需获取response中的cookie，在下次进行客户端向服务端请求时会自动携带上存放sessionId的cookie。
 
 关于Request.credentials:(https://developer.mozilla.org/en-US/docs/Web/API/Request/credentials)
+
 参考文章：https://segmentfault.com/q/1010000007435062
 
 
