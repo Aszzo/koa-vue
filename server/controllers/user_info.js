@@ -1,5 +1,6 @@
 const userInfoService = require('../modle/user_info');
 const userCode = require('../codes/users');
+const jwt = require('jsonwebtoken');
 module.exports = {
   async signup(ctx) {
     /**
@@ -64,15 +65,24 @@ module.exports = {
     }
     let testUsernameAndPassword = await userInfoService.findByUsernameAndPassword(formData);
     if(testUsernameAndPassword){
-      let delExpiresSession = await userInfoService.deleteExpires(new Date().getTime());
-      if(delExpiresSession){
-        let session = ctx.session;
-        session.isLogin = true;
-        session.userName = testUsernameAndPassword.name;
-        session.userId = testUsernameAndPassword.id;
-      }
+      let secret = 'koa-vue';
+      let userToken = {'name':testUsernameAndPassword.name};
+      let token = jwt.sign({exp:Math.floor(Date.now() / 1000) + (1 * 60),data:userToken},secret); // 签发token
+      // let delExpiresSession = await userInfoService.deleteExpires(new Date().getTime()); //通过session保持会话状态
+      // if(delExpiresSession){
+      //   let session = ctx.session;
+      //   session.isLogin = true;
+      //   session.userName = testUsernameAndPassword.name;
+      //   session.userId = testUsernameAndPassword.id;
+      // }
+      ctx.cookies.set('token',token,{
+        maxAge:24 * 60 * 1000, // cookie有效时长
+        httpOnly: true,  // 是否只用于http请求中获取
+        overwrite: false  // 是否允许重写
+
+      });
       result.success = true;
-      ctx.body = result;
+      ctx.body = Object.assign({},result,{token:token});
       return
     }else{
       result.msg = userCode.FAIL_USER_NAME_OR_PASSWORD_ERROR;

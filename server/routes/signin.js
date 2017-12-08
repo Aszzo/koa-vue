@@ -1,19 +1,16 @@
 const router = require('koa-router')()
 const users = require('../controllers/user_info');
-const MysqlStore = require('koa-mysql-session')
-const config = require('../config/config')
-const sessionMysqlConfig= {
-  user: config.sql_config.USERNAME,
-  password: config.sql_config.PASSWORD,
-  database: config.sql_config.DATABASE,
-  host: config.sql_config.HOST,
-}
+const jwt = require('jsonwebtoken');
 router.prefix('/signin')
 
 router.post('/',users.signin)
-router.post('/test',ctx => {
-  console.log(ctx.session)
-  ctx.body = ctx.session
+router.post('/test',async ctx => {
+  console.log(ctx.req.headers.token)
+  let token = ctx.req.headers.token;
+  jwt.verify(token, 'koa-vue', function(err, decoded) {
+    console.log(decoded,1111) // bar
+  });
+  ctx.body = {}
 })
 
 module.exports = router;

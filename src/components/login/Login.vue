@@ -45,6 +45,9 @@
         axios({
           method: 'post',
           url: 'http://192.168.3.109:3000/signin/test',
+          headers:{
+            token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MTI3MjA4OTUsImRhdGEiOnsibmFtZSI6ImFkbWluMTIifSwiaWF0IjoxNTEyNzIwODM1fQ.4xbw9cxyLGnsF796J4BQ2AaaUpCH8bNdl7KBkATH4Fc"
+          },
           withCredentials:true
         })
           .then(response => {

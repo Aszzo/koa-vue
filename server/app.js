@@ -5,6 +5,7 @@ const index = require('./routes/index')
 const session = require('koa-session-minimal')
 const MysqlStore = require('koa-mysql-session')
 const cors = require('koa2-cors');
+const cookie = require('koa-cookie');
 const config = require('./config/config')
 const signup = require('./routes/signup')
 const signin = require('./routes/signin')
@@ -12,7 +13,6 @@ const ONE_DAY  = 24 * 3600 * 1000;
 const app = new Koa();
 app.use(logger());
 app.use(bodyParser());
-
 // session存储配置
 const sessionMysqlConfig= {
   user: config.sql_config.USERNAME,
@@ -24,7 +24,7 @@ app.use(cors({
   origin:'http://localhost:8080',
   credentials: true,
   allowMethods: ['GET', 'POST', 'DELETE'],
-  allowHeaders: ['Content-Type', 'Authorization', 'Accept']
+  allowHeaders: ['Content-Type', 'Authorization', 'Accept','token']
   }));
 // 配置session中间件
 app.use(session({
