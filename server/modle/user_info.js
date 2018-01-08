@@ -102,6 +102,6 @@ const user = {
     let _sql = 'DELETE FROM `_mysql_session_store` WHERE expires  < ?';
     let result = await dbUtils.query(_sql,date);
     return result;
-  }
+  },
 };
 module.exports = user;

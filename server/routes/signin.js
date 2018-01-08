@@ -1,7 +1,7 @@
 const router = require('koa-router')()
 const users = require('../controllers/user_info');
 const jwt = require('jsonwebtoken');
-router.prefix('/signin')
+// router.prefix('/signin')
 
 router.post('/',users.signin)
 router.post('/test',async ctx => {

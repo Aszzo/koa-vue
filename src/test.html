@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  //普通的构造函数继承
+//  function Student() {
+//    this.name = "tes";
+//    this.age = 18;
+//    this.move = function () {
+//      console.log(this.name)
+//    }
+//  }
+//  function Teacher() {
+//    Student.call(this)
+//  }
+//new Teacher().move();
+  //原型链继承
+  function Sub() {
+    this.age = 19;
+  }
+  Sub.prototype.move = function () {
+    this.age = 20;
+    console.log(this.age)
+  };
+  function Somefun() {
+    this.hasTest = false;
+  }
+  Somefun.prototype = new Sub();
+</script>
+</html>

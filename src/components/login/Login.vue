@@ -1,5 +1,6 @@
 <template>
   <div class="login-container">
+    <img src="../../assets/logo.png">
     <h1>欢迎使用博客后台管理系统</h1>
     <div class="user-container">
 
@@ -10,7 +11,6 @@
     </div>
     <div class="btn-container">
       <el-button type="primary" class="login-btn" v-on:click="submit">登录</el-button>
-      <el-button type="primary" class="login-btn" v-on:click="test">测试</el-button>
     </div>
   </div>
 </template>
@@ -30,7 +30,7 @@
         console.log(this.user,this.pass)
         axios({
           method: 'post',
-          url: 'http://192.168.3.109:3000/signin',
+          url: 'http://192.168.49.1:3000/signin',
           data: {
             username: this.user,
             password: this.pass
@@ -41,19 +41,19 @@
             console.log(response)
           })
       },
-      test:function () {
-        axios({
-          method: 'post',
-          url: 'http://192.168.3.109:3000/signin/test',
-          headers:{
-            token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MTI3MjA4OTUsImRhdGEiOnsibmFtZSI6ImFkbWluMTIifSwiaWF0IjoxNTEyNzIwODM1fQ.4xbw9cxyLGnsF796J4BQ2AaaUpCH8bNdl7KBkATH4Fc"
-          },
-          withCredentials:true
-        })
-          .then(response => {
-            console.log(response)
-          })
-      }
+//      test:function () {
+//        axios({
+//          method: 'post',
+//          url: 'http://192.168.49.1:3000/signin/test',
+//          headers:{
+//            token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MTMyNDI1MTgsImRhdGEiOnsibmFtZSI6ImFkbWluMTIifSwiaWF0IjoxNTEzMjQyNDU4fQ.fW3CfnUKQXJ850Xc5Xa8R6wjmby_QWqWTxmifzV9GzM"
+//          },
+//          withCredentials:true
+//        })
+//          .then(response => {
+//            console.log(response)
+//          })
+//      }
     }
   }
 </script>

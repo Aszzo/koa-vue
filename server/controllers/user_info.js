@@ -1,4 +1,5 @@
 const userInfoService = require('../modle/user_info');
+const userUntils = require('../utils/user_utils');
 const userCode = require('../codes/users');
 const jwt = require('jsonwebtoken');
 module.exports = {
@@ -75,11 +76,17 @@ module.exports = {
       //   session.userName = testUsernameAndPassword.name;
       //   session.userId = testUsernameAndPassword.id;
       // }
+      let findLoginName = await userUntils.findDataByUser('users_state',testUsernameAndPassword.name);
+      if(Array.isArray(findLoginName)&&findLoginName.length>0){
+          userUntils.updateData('users_state',Date.now(),testUsernameAndPassword.name);
+      }else{
+        let values = {name:testUsernameAndPassword.name,login_time:Date.now()};
+        userUntils.insertData('users_state',values)
+      }
       ctx.cookies.set('token',token,{
         maxAge:24 * 60 * 1000, // cookie有效时长
         httpOnly: true,  // 是否只用于http请求中获取
         overwrite: false  // 是否允许重写
-
       });
       result.success = true;
       ctx.body = Object.assign({},result,{token:token});

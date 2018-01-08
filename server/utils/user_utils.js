@@ -42,9 +42,15 @@ let insertData = function( table, values ) {
   let _sql = "INSERT INTO ?? SET ?"
   return query( _sql, [ table, values ] )
 }
+/*更新表中的某个字段*/
+let updateData = function (table,data,name) {
+  let _sql = "UPDATE ?? SET login_time = ? WHERE name = ?"
+  return query(_sql,[table,data,name])
+}
 module.exports = {
   query,
   findTableData,
   findDataByUser,
-  insertData
+  insertData,
+  updateData
 };

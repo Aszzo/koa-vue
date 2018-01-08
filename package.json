@@ -26,9 +26,11 @@
     "koa-session-minimal": "^3.0.4",
     "koa2-cors": "^2.0.5",
     "mysql": "^2.15.0",
+    "qs": "^6.5.1",
     "validator": "^9.1.2",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

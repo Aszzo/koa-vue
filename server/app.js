@@ -1,14 +1,12 @@
 const Koa = require('koa');
 const logger = require('koa-logger');
 const bodyParser = require('koa-bodyparser')
-const index = require('./routes/index')
 const session = require('koa-session-minimal')
 const MysqlStore = require('koa-mysql-session')
 const cors = require('koa2-cors');
 const cookie = require('koa-cookie');
 const config = require('./config/config')
-const signup = require('./routes/signup')
-const signin = require('./routes/signin')
+const routers = require('./routes/index')
 const ONE_DAY  = 24 * 3600 * 1000;
 const app = new Koa();
 app.use(logger());
@@ -41,8 +39,6 @@ app.use(session({
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)
 });
-app.use(index.routes(), index.allowedMethods())
-app.use(signup.routes(), signup.allowedMethods())
-app.use(signin.routes(), signin.allowedMethods())
+app.use(routers.routes()).use(routers.allowedMethods())
 
 module.exports = app;
