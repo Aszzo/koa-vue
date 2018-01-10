@@ -28,6 +28,7 @@
   import ajax from '../../HttpRequest/HttpRequest';
   import hostName from '../../HttpRequest/hostName';
   import axios from 'axios';
+  import { Message } from 'element-ui';
   export default {
     name: "signup",
     data() {
@@ -111,7 +112,11 @@
             };
             ajax.webRequest(undefined,`${hostName}/signup`,data)
               .then(res => {
-                console.log(res)
+                if(res.data.success){
+
+                }else{
+                  this.$message.error(res.data.msg);
+                }
               })
               .catch(err => {
                 throw new Error(err);

@@ -12,11 +12,14 @@
     <div class="btn-container">
       <el-button type="primary" class="login-btn" v-on:click="submit">登录</el-button>
     </div>
+    <div>{{count+"1"}}</div>
   </div>
 </template>
 <script>
   import './login.less'
   import axios from 'axios'
+  import { Message } from 'element-ui';
+  import { mapState } from 'vuex';
   export default {
     name: "login",
     data(){
@@ -27,7 +30,6 @@
     },
     methods:{
       submit:function () {
-        console.log(this.user,this.pass)
         axios({
           method: 'post',
           url: 'http://192.168.49.1:3000/signin',
@@ -39,21 +41,17 @@
         })
           .then(response => {
             console.log(response)
+             if(response.data.success){
+               location.href = '/'
+             }else{
+               this.$store.commit('LOGIN')
+               this.$message.error(response.data.msg);
+             }
           })
       },
-//      test:function () {
-//        axios({
-//          method: 'post',
-//          url: 'http://192.168.49.1:3000/signin/test',
-//          headers:{
-//            token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MTMyNDI1MTgsImRhdGEiOnsibmFtZSI6ImFkbWluMTIifSwiaWF0IjoxNTEzMjQyNDU4fQ.fW3CfnUKQXJ850Xc5Xa8R6wjmby_QWqWTxmifzV9GzM"
-//          },
-//          withCredentials:true
-//        })
-//          .then(response => {
-//            console.log(response)
-//          })
-//      }
-    }
+    },
+    computed:mapState({
+      count: state => state.user_info.isLogin
+    })
   }
 </script>
