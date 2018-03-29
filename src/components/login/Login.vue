@@ -12,7 +12,6 @@
     <div class="btn-container">
       <el-button type="primary" class="login-btn" v-on:click="submit">登录</el-button>
     </div>
-    <div>{{count+"1"}}</div>
   </div>
 </template>
 <script>

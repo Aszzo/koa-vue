@@ -113,7 +113,7 @@
             ajax.webRequest(undefined,`${hostName}/signup`,data)
               .then(res => {
                 if(res.data.success){
-
+                    window.location.href = '/login'
                 }else{
                   this.$message.error(res.data.msg);
                 }
